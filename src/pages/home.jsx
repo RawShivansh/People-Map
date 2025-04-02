@@ -9,13 +9,29 @@ const Home = () => {
   const [filteredProfiles, setFilteredProfiles] = useState(profiles);
 
 
-  const handleSearch = (query) => {
-    const filtered = profiles.filter(profile =>
-      profile.name.toLowerCase().includes(query.toLowerCase())
-    );
+  // const handleSearch = (query) => {
+  //   const filtered = profiles.filter(profile =>
+  //     profile.name.toLowerCase().includes(query.toLowerCase())
+  //   );
+  //   setFilteredProfiles(filtered);
+  // };
+
+  const handleSearch = (query, filterType) => {
+    let filtered = profiles;
+  
+    if (query.trim() !== "") {
+      filtered = profiles.filter((profile) => {
+        if (filterType === "name") {
+          return profile.name.toLowerCase().includes(query.toLowerCase());
+        } else if (filterType === "interests") {
+          return profile.interests.some(interest => interest.toLowerCase().includes(query.toLowerCase()));
+        }
+        return false;
+      });
+    }
+  
     setFilteredProfiles(filtered);
   };
-
   return (
     <div className="container mx-auto p-4">
  
